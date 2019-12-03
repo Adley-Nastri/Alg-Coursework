@@ -3,7 +3,7 @@ Paper1,Title1,1
 AM,AP
 9,8,7
 Paper2,Title2,2
-AM,PS,TC
+AM,PS,TC,PF
 10,8
 Paper3,Title3,3
 AM,PP

@@ -100,9 +100,28 @@ public class Main {
 			 System.out.println("Authors :" + Papers.get(i).getAuthors());
 			 System.out.println("Co-authors :" + Papers.get(i).getCoauthors());
 			 System.out.println("Scores : "+Arrays.toString(Papers.get(i).getScores()));
+			 System.out.printf("Avg %.2f ",Papers.get(i).getAvg());
+			 System.out.println("");
+			 System.out.println("REF : "+Papers.get(i).getREF());
+			 System.out.println("");
 			 System.out.println("");
 		 }
 		 
+		 System.out.println("GPA of "+Papers.size()+" Papers : "+GPA(Papers));
+	}
+	
+	
+	public static double GPA(ArrayList<Paper> Papers_)
+	{
+		double gpa = 0;
+		double sum = 0;
+		for(int j = 0; j < Papers_.size(); j++)
+		{
+			sum += Papers_.get(j).getREF();
+		}
+		gpa = sum/Papers_.size();
+		return gpa;
+		
 	}
 
 }

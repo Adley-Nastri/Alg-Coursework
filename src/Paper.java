@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.stream.IntStream;
 
 public class Paper {
 	
@@ -32,7 +33,7 @@ public class Paper {
 	public void setID(String iD) {
 		ID = iD;
 	}
-
+	
 
 
 	public String getTitle() {
@@ -75,7 +76,32 @@ public class Paper {
 		return scores;
 	}
 
+	public double getAvg() {
+		
+		double sum = IntStream.of(this.scores).sum();
+		return sum/this.scores.length;
+	}
 
+	public int getREF()
+	{
+		int ref = 0;
+		if (this.getAvg() >= 0 && this.getAvg() <4) {
+			ref = 0;
+		}
+		if (this.getAvg() >= 1 && this.getAvg() <4) {
+			ref = 1;
+		}
+		if (this.getAvg() >= 4 && this.getAvg() <7) {
+			ref = 2;
+		}
+		if (this.getAvg() >= 7 && this.getAvg() <10) {
+			ref =  3;
+		}
+		if (this.getAvg() >= 10 && this.getAvg() <=12) {
+			ref = 4;
+		}
+		return ref;
+	}
 
 	public void setScores(int[] scores) {
 		this.scores = scores;
