@@ -3,6 +3,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.Collections;
+import java.util.List;
 
 public class Main {
 
@@ -15,6 +17,7 @@ public class Main {
 		   return Arrays.asList(outer).contains(o); //Return whether array contains specified string.
 		}
 
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws FileNotFoundException{
 		 input = new Scanner(new File("\\\\dl-stud1\\users\\D35\\u1803005\\Desktop\\Alg-Coursework-master\\Alg-Coursework-master\\src\\Input.txt"));
 		 input.useDelimiter(","); //Each new object is separated by a comma
@@ -107,6 +110,29 @@ public class Main {
 			 System.out.println("");
 		 }
 		 
+		 
+		 Collections.sort(Papers);
+		 for (int k = 0 ; k < Papers.size(); k++)
+		 {
+			 if (k+1 < Papers.size()) {
+				 
+			 
+				 if (Papers.get(k).getAvg() == Papers.get(k+1).getAvg()) {
+					 
+					 //System.out.println("MATCH " +Papers.get(k).getTitle() + " "+ Papers.get(k+1).getTitle());
+					 
+					 if (Papers.get(k).getQuartile() > Papers.get(k+1).getQuartile())
+					 {
+						Collections.swap(Papers, k, k+1);
+					 }
+					 
+				 
+				 }
+			 }
+			 
+			 
+			 System.out.println("Title = " + Papers.get(k).getTitle() + " | AVG = " +Papers.get(k).getAvg()+ " | REF = " +Papers.get(k).getREF() + " | Quartile = " +Papers.get(k).getQuartile());
+		 }
 		 System.out.println("GPA of "+Papers.size()+" Papers : "+GPA(Papers));
 	}
 	
@@ -122,6 +148,13 @@ public class Main {
 		gpa = sum/Papers_.size();
 		return gpa;
 		
+	}
+	
+	@SuppressWarnings("hiding")
+	public static <Paper> void swap(ArrayList<Paper> list, int x, int y) {
+	    Paper p_ = list.get(x);
+	    list.set(x, list.get(y));
+	    list.set(y, p_);
 	}
 
 }

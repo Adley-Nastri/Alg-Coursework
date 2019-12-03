@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 
-public class Paper {
+public class Paper implements Comparable<Paper>{
 	
 	String ID;
 	String title;
@@ -9,6 +9,7 @@ public class Paper {
 	ArrayList<String> authors;
 	ArrayList<String> coauthors;
 	int[] scores;
+	int REF;
 	
 	
 	
@@ -84,23 +85,22 @@ public class Paper {
 
 	public int getREF()
 	{
-		int ref = 0;
 		if (this.getAvg() >= 0 && this.getAvg() <1) {
-			ref = 0;
+			this.REF = 0;
 		}
 		if (this.getAvg() >= 1 && this.getAvg() <4) {
-			ref = 1;
+			this.REF = 1;
 		}
 		if (this.getAvg() >= 4 && this.getAvg() <7) {
-			ref = 2;
+			this.REF = 2;
 		}
 		if (this.getAvg() >= 7 && this.getAvg() <10) {
-			ref =  3;
+			this.REF =  3;
 		}
 		if (this.getAvg() >= 10 && this.getAvg() <=12) {
-			ref = 4;
+			this.REF = 4;
 		}
-		return ref;
+		return this.REF;
 	}
 
 	public void setScores(int[] scores) {
@@ -117,6 +117,20 @@ public class Paper {
 
 	public void setQuartile(int quartile) {
 		this.quartile = quartile;
+	}
+	
+	public void setREF(int REF) {
+		this.REF = REF;
+	}
+
+
+
+
+	@Override
+	public int compareTo(Paper o) {
+		// TODO Auto-generated method stub
+		return Double.compare(o.getAvg(), this.getAvg());
+	
 	}
 
 	
