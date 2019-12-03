@@ -150,11 +150,5 @@ public class Main {
 		
 	}
 	
-	@SuppressWarnings("hiding")
-	public static <Paper> void swap(ArrayList<Paper> list, int x, int y) {
-	    Paper p_ = list.get(x);
-	    list.set(x, list.get(y));
-	    list.set(y, p_);
-	}
 
 }
