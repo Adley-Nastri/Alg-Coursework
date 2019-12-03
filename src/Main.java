@@ -12,23 +12,23 @@ public class Main {
 	
 	public static boolean linearIn(String[] outer, String o) {
 
-		   return Arrays.asList(outer).contains(o);
+		   return Arrays.asList(outer).contains(o); //Return whether array contains specified string.
 		}
 
 	public static void main(String[] args) throws FileNotFoundException{
-		 input = new Scanner(new File("C:\\\\\\\\Users\\\\\\\\CANastri\\\\\\\\eclipse-workspace-3\\\\\\\\Alg Coursework\\\\\\\\src\\\\\\\\Input.txt"));
-		 input.useDelimiter(",");
+		 input = new Scanner(new File("\\\\dl-stud1\\users\\D35\\u1803005\\Desktop\\Alg-Coursework-master\\Alg-Coursework-master\\src\\Input.txt"));
+		 input.useDelimiter(","); //Each new object is separated by a comma
 		 
-		 ArrayList<Paper> Papers = new ArrayList<Paper>();
-		 String[] auth = input.nextLine().split(",");
+		 ArrayList<Paper> Papers = new ArrayList<Paper>(); //ArrayList of Paper Objects
+		 String[] auth = input.nextLine().split(","); //Main authors defined in the first line of the file (AK, PF, AM), split by a comma
 		 
 		 System.out.println(Arrays.toString(auth));
 		 System.out.println("");
 		 while(input.hasNext()) {
-			 ArrayList<String> p_auth = new ArrayList<String>();
-			 ArrayList<String> coauth = new ArrayList<String>();
+			 ArrayList<String> p_auth = new ArrayList<String>(); //Authors to be applied to paper object. 
+			 ArrayList<String> coauth = new ArrayList<String>(); //Co-authors to be applied
 			 
-			 String id = input.next();
+			 String id = input.next(); //
 			 System.out.println(id);
 			 String title = input.next();
 			 System.out.println(title);
@@ -38,16 +38,16 @@ public class Main {
 			 System.out.println("");
 			 int quartile = Integer.parseInt(quart);
 			 
-			 String[] coauth_tmp = input.nextLine().split(",");
+			 String[] coauth_tmp = input.nextLine().split(","); // Read next line and place into a temp array
 			 
 			for (int ca = 0; ca < coauth_tmp.length ; ca ++)
 			{ 
-				if (linearIn(auth, coauth_tmp[ca])) {
+				if (linearIn(auth, coauth_tmp[ca])) {  //If the current co-author is in the main Author array, then add Author to Paper object
 					System.out.println(coauth_tmp[ca]+ " is in Authors");
 					p_auth.add(coauth_tmp[ca]);
 					
 				}
-				if (!linearIn(auth, coauth_tmp[ca])) {
+				if (!linearIn(auth, coauth_tmp[ca])) {//If the current co-author is NOT in the main Author array, then add Co-author to Paper object
 					System.out.println(coauth_tmp[ca]+ " is not in Authors");
 					coauth.add(coauth_tmp[ca]);
 					
@@ -59,8 +59,11 @@ public class Main {
 			System.out.println("Co-auth "+coauth);
 			
 			
-			if (p_auth.size() == 0 && coauth.size() > 0) {
-				System.out.println(coauth + " Left Instiution");
+			if (p_auth.size() == 0 && coauth.size() > 0) { //If the size of the Paper's author arraylist is 0 and the paper only has co-authors then
+			    //They must have left the institution 
+				System.out.println(coauth + " Left Instiution"); 
+				
+				//DO NOT CONTRIBUTE TO FTE HEAD COUNT
 			}
 			
 			
@@ -70,10 +73,10 @@ public class Main {
 			 System.out.println("");
 			 
 			
-			 int[] scorearr = Arrays.stream(scores).mapToInt(Integer::parseInt).toArray();
+			 int[] scorearr = Arrays.stream(scores).mapToInt(Integer::parseInt).toArray(); //Convert String of scores into int format
 			
 	
-			Paper pap = new Paper(id, title, quartile, p_auth, coauth, scorearr);
+			Paper pap = new Paper(id, title, quartile, p_auth, coauth, scorearr); //New Paper object
 			
 			
 			Papers.add(pap);
