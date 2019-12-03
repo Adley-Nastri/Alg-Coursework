@@ -85,7 +85,7 @@ public class Paper {
 	public int getREF()
 	{
 		int ref = 0;
-		if (this.getAvg() >= 0 && this.getAvg() <4) {
+		if (this.getAvg() >= 0 && this.getAvg() <1) {
 			ref = 0;
 		}
 		if (this.getAvg() >= 1 && this.getAvg() <4) {
