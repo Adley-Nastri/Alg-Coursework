@@ -10,8 +10,6 @@ public class Main {
 
 	private static Scanner input;
 	
-	
-	
 	public static boolean linearIn(String[] outer, String o) {
 
 		   return Arrays.asList(outer).contains(o); //Return whether array contains specified string.
@@ -52,11 +50,9 @@ public class Main {
 				if (!linearIn(auth, coauth_tmp[ca])) {//If the current co-author is NOT in the main Author array, then add Co-author to Paper object
 					System.out.println(coauth_tmp[ca]+ " is not in Authors");
 					coauth.add(coauth_tmp[ca]);
-					
 				}
 				
 			}
-			
 			System.out.println("Auth "+p_auth);
 			System.out.println("Co-auth "+coauth);
 			
@@ -67,20 +63,12 @@ public class Main {
 				
 				//DO NOT CONTRIBUTE TO FTE HEAD COUNT
 			}
-			
-			
-			 
 			 String[] scores = input.nextLine().split(",");
 			 System.out.println(Arrays.toString(scores));
 			 System.out.println("");
 			 
-			
 			 int[] scorearr = Arrays.stream(scores).mapToInt(Integer::parseInt).toArray(); //Convert String of scores into int format
-			
-	
 			Paper pap = new Paper(id, title, quartile, p_auth, coauth, scorearr); //New Paper object
-			
-			
 			Papers.add(pap);
 		
 		 }
@@ -94,28 +82,12 @@ public class Main {
 		 //IF PAPER IS BY MAIN AUTHOR BUT EXCEEDS THE MAX VALUE OF 5 FOR THAT AUTHOR, THEN SCRAP THE PAPER
 		 //ADD THE REST TO BE USED WITHIN GPA CALCULATIONS
 		 
-		 System.out.println("TOTAL PAPERS : "+Papers.size()+ "\n");
-//		 for (int i = 0; i  < Papers.size(); i++) {
-//			 System.out.println("Paper ID : "+Papers.get(i).getID());
-//			 System.out.println("Paper Title : "+Papers.get(i).getTitle());
-//			 System.out.println("Quartile : "+Papers.get(i).getQuartile());
-//			 System.out.println("Authors :" + Papers.get(i).getAuthors());
-//			 System.out.println("Co-authors :" + Papers.get(i).getCoauthors());
-//			 System.out.println("Scores : "+Arrays.toString(Papers.get(i).getScores()));
-//			 System.out.printf("Avg : %.2f ",Papers.get(i).getAvg());
-//			 System.out.println("");
-//			 System.out.println("REF : "+Papers.get(i).getREF());
-//			 System.out.println("");
-//			 System.out.println("");
-//		 }
-		 
+		 System.out.println("TOTAL PAPERS : "+Papers.size()+ "\n");		 
 		 
 		 Collections.sort(Papers);
 		 for (int k = 0 ; k < Papers.size(); k++)
 		 {
 			 if (k+1 < Papers.size()) {
-				 
-			 
 				 if (Papers.get(k).getAvg() == Papers.get(k+1).getAvg()) {
 					 
 					 //System.out.println("MATCH " +Papers.get(k).getTitle() + " "+ Papers.get(k+1).getTitle());
@@ -124,8 +96,6 @@ public class Main {
 					 {
 						Collections.swap(Papers, k, k+1);
 					 }
-					 
-				 
 				 }
 			 }
 			 
@@ -148,26 +118,17 @@ public class Main {
 			        	System.out.println("\nPaper ID = "+pap_.getID()+" | REF = "+pap_.getREF());
 			        	
 			        	auth_pap.add(pap_);
-
-			        	
-			        	
 			        }
-			        
-			       
-			           
-			    }
+			  
 			 Author auth_obj = new Author(auth[auth_int], auth_pap);
 	        	
-	        auth_al.add(auth_obj);
-			System.out.println("\nSIZE "+auth_al.get(auth_int).auth_papers.size());
-			
-			
-			System.out.println("GPA = "+GPA(auth_al.get(auth_int).auth_papers)+"\n");
-			 
-			 
+	        	 auth_al.add(auth_obj);
+			 System.out.println("\nSIZE "+auth_al.get(auth_int).auth_papers.size());
+		
+			 System.out.println("GPA = "+GPA(auth_al.get(auth_int).auth_papers)+"\n");
+ 
 		 }
 	}
-	
 	
 	public static double GPA(ArrayList<Paper> Papers_)
 	{
