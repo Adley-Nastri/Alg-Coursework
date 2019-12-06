@@ -1,10 +1,10 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Collections;
-import java.util.List;
 
 public class Main {
 
@@ -17,12 +17,12 @@ public class Main {
 		   return Arrays.asList(outer).contains(o); //Return whether array contains specified string.
 		}
 
-	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws FileNotFoundException{
-		 input = new Scanner(new File("\\\\dl-stud1\\users\\D35\\u1803005\\Desktop\\Alg-Coursework-master\\Alg-Coursework-master\\src\\Input.txt"));
+		 input = new Scanner(new File("C:\\Users\\CANastri\\Desktop\\Github Alg\\Alg-Coursework\\src\\Input.txt"));
 		 input.useDelimiter(","); //Each new object is separated by a comma
 		 
 		 ArrayList<Paper> Papers = new ArrayList<Paper>(); //ArrayList of Paper Objects
+		 ArrayList<Author> auth_al = new ArrayList<Author>();
 		 String[] auth = input.nextLine().split(","); //Main authors defined in the first line of the file (AK, PF, AM), split by a comma
 		 
 		 System.out.println(Arrays.toString(auth));
@@ -38,7 +38,6 @@ public class Main {
 			 
 			 String quart = input.nextLine().replace(",", "");
 			 System.out.println(quart);
-			 System.out.println("");
 			 int quartile = Integer.parseInt(quart);
 			 
 			 String[] coauth_tmp = input.nextLine().split(","); // Read next line and place into a temp array
@@ -96,19 +95,19 @@ public class Main {
 		 //ADD THE REST TO BE USED WITHIN GPA CALCULATIONS
 		 
 		 System.out.println("TOTAL PAPERS : "+Papers.size()+ "\n");
-		 for (int i = 0; i  < Papers.size(); i++) {
-			 System.out.println("Paper ID : "+Papers.get(i).getID());
-			 System.out.println("Paper Title : "+Papers.get(i).getTitle());
-			 System.out.println("Quartile : "+Papers.get(i).getQuartile());
-			 System.out.println("Authors :" + Papers.get(i).getAuthors());
-			 System.out.println("Co-authors :" + Papers.get(i).getCoauthors());
-			 System.out.println("Scores : "+Arrays.toString(Papers.get(i).getScores()));
-			 System.out.printf("Avg %.2f ",Papers.get(i).getAvg());
-			 System.out.println("");
-			 System.out.println("REF : "+Papers.get(i).getREF());
-			 System.out.println("");
-			 System.out.println("");
-		 }
+//		 for (int i = 0; i  < Papers.size(); i++) {
+//			 System.out.println("Paper ID : "+Papers.get(i).getID());
+//			 System.out.println("Paper Title : "+Papers.get(i).getTitle());
+//			 System.out.println("Quartile : "+Papers.get(i).getQuartile());
+//			 System.out.println("Authors :" + Papers.get(i).getAuthors());
+//			 System.out.println("Co-authors :" + Papers.get(i).getCoauthors());
+//			 System.out.println("Scores : "+Arrays.toString(Papers.get(i).getScores()));
+//			 System.out.printf("Avg : %.2f ",Papers.get(i).getAvg());
+//			 System.out.println("");
+//			 System.out.println("REF : "+Papers.get(i).getREF());
+//			 System.out.println("");
+//			 System.out.println("");
+//		 }
 		 
 		 
 		 Collections.sort(Papers);
@@ -130,10 +129,43 @@ public class Main {
 				 }
 			 }
 			 
-			 
-			 System.out.println("Title = " + Papers.get(k).getTitle() + " | AVG = " +Papers.get(k).getAvg()+ " | REF = " +Papers.get(k).getREF() + " | Quartile = " +Papers.get(k).getQuartile());
+			 DecimalFormat df = new DecimalFormat();
+			 df.setMaximumFractionDigits(2);
+			 System.out.println("Title = " + Papers.get(k).getTitle() + " | AVG = " +df.format(Papers.get(k).getAvg())+ " | REF = " +Papers.get(k).getREF() + " | Quartile = " +Papers.get(k).getQuartile());
 		 }
 		 System.out.println("GPA of "+Papers.size()+" Papers : "+GPA(Papers));
+		 System.out.println("");
+		 
+		 for (int auth_int = 0; auth_int < auth.length; auth_int++ )
+		 {
+			 ArrayList<Paper> auth_pap = new ArrayList<Paper>();
+			 System.out.println("~~~~~~~~~~~~~~~~~~~~");
+			 System.out.println(auth[auth_int]);
+			 System.out.println("~~~~~~~~~~~~~~~~~~~~");
+			 for(Paper pap_ : Papers){
+			        if(pap_.getAuthors() != null && pap_.getAuthors().contains(auth[auth_int])){
+			        	
+			        	System.out.println("\nPaper ID = "+pap_.getID()+" | REF = "+pap_.getREF());
+			        	
+			        	auth_pap.add(pap_);
+
+			        	
+			        	
+			        }
+			        
+			       
+			           
+			    }
+			 Author auth_obj = new Author(auth[auth_int], auth_pap);
+	        	
+	        auth_al.add(auth_obj);
+			System.out.println("\nSIZE "+auth_al.get(auth_int).auth_papers.size());
+			
+			
+			System.out.println("GPA = "+GPA(auth_al.get(auth_int).auth_papers)+"\n");
+			 
+			 
+		 }
 	}
 	
 	
