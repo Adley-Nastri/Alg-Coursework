@@ -89,9 +89,7 @@ public class Main {
 		 {
 			 if (k+1 < Papers.size()) {
 				 if (Papers.get(k).getAvg() == Papers.get(k+1).getAvg()) {
-					 
-					 //System.out.println("MATCH " +Papers.get(k).getTitle() + " "+ Papers.get(k+1).getTitle());
-					 
+
 					 if (Papers.get(k).getQuartile() > Papers.get(k+1).getQuartile())
 					 {
 						Collections.swap(Papers, k, k+1);
