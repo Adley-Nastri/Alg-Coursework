@@ -10,6 +10,8 @@ public class Main {
 
 	private static Scanner input;
 	
+	
+	
 	public static boolean linearIn(String[] outer, String o) {
 
 		   return Arrays.asList(outer).contains(o); //Return whether array contains specified string.
@@ -50,9 +52,11 @@ public class Main {
 				if (!linearIn(auth, coauth_tmp[ca])) {//If the current co-author is NOT in the main Author array, then add Co-author to Paper object
 					System.out.println(coauth_tmp[ca]+ " is not in Authors");
 					coauth.add(coauth_tmp[ca]);
+					
 				}
 				
 			}
+			
 			System.out.println("Auth "+p_auth);
 			System.out.println("Co-auth "+coauth);
 			
@@ -63,12 +67,20 @@ public class Main {
 				
 				//DO NOT CONTRIBUTE TO FTE HEAD COUNT
 			}
+			
+			
+			 
 			 String[] scores = input.nextLine().split(",");
 			 System.out.println(Arrays.toString(scores));
 			 System.out.println("");
 			 
+			
 			 int[] scorearr = Arrays.stream(scores).mapToInt(Integer::parseInt).toArray(); //Convert String of scores into int format
+			
+	
 			Paper pap = new Paper(id, title, quartile, p_auth, coauth, scorearr); //New Paper object
+			
+			
 			Papers.add(pap);
 		
 		 }
@@ -82,27 +94,57 @@ public class Main {
 		 //IF PAPER IS BY MAIN AUTHOR BUT EXCEEDS THE MAX VALUE OF 5 FOR THAT AUTHOR, THEN SCRAP THE PAPER
 		 //ADD THE REST TO BE USED WITHIN GPA CALCULATIONS
 		 
-		 System.out.println("TOTAL PAPERS : "+Papers.size()+ "\n");		 
+		 System.out.println("TOTAL PAPERS : "+Papers.size()+ "\n");
+//		 for (int i = 0; i  < Papers.size(); i++) {
+//			 System.out.println("Paper ID : "+Papers.get(i).getID());
+//			 System.out.println("Paper Title : "+Papers.get(i).getTitle());
+//			 System.out.println("Quartile : "+Papers.get(i).getQuartile());
+//			 System.out.println("Authors :" + Papers.get(i).getAuthors());
+//			 System.out.println("Co-authors :" + Papers.get(i).getCoauthors());
+//			 System.out.println("Scores : "+Arrays.toString(Papers.get(i).getScores()));
+//			 System.out.printf("Avg : %.2f ",Papers.get(i).getAvg());
+//			 System.out.println("");
+//			 System.out.println("REF : "+Papers.get(i).getREF());
+//			 System.out.println("");
+//			 System.out.println("");
+//		 }
+		 
 		 
 		 Collections.sort(Papers);
-		 for (int k = 0 ; k < Papers.size(); k++)
-		 {
-			 if (k+1 < Papers.size()) {
-				 if (Papers.get(k).getAvg() == Papers.get(k+1).getAvg()) {
-
-					 if (Papers.get(k).getQuartile() > Papers.get(k+1).getQuartile())
-					 {
-						Collections.swap(Papers, k, k+1);
-					 }
-				 }
-			 }
-			 
-			 DecimalFormat df = new DecimalFormat();
-			 df.setMaximumFractionDigits(2);
-			 System.out.println("Title = " + Papers.get(k).getTitle() + " | AVG = " +df.format(Papers.get(k).getAvg())+ " | REF = " +Papers.get(k).getREF() + " | Quartile = " +Papers.get(k).getQuartile());
-		 }
-		 System.out.println("GPA of "+Papers.size()+" Papers : "+GPA(Papers));
+		 //MAKE SORT FUNCTION :  SORT(ArrayList<Paper> PapsToSort, int N)
+		 
+		  
+		 
+//		 for (int k = 0 ; k < Papers.size(); k++)
+//		 {
+//			 if (k+1 < Papers.size()) {
+//				 
+//			 
+//				 if (Papers.get(k).getAvg() == Papers.get(k+1).getAvg()) {
+//					 
+//					 //System.out.println("MATCH " +Papers.get(k).getTitle() + " "+ Papers.get(k+1).getTitle());
+//					 
+//					 if (Papers.get(k).getQuartile() > Papers.get(k+1).getQuartile())
+//					 {
+//						Collections.swap(Papers, k, k+1);
+//					 }
+//					 
+//				 
+//				 }
+//			 }
+//			 
+//			 DecimalFormat df = new DecimalFormat();
+//			 df.setMaximumFractionDigits(2);
+//			 System.out.println("Title = " + Papers.get(k).getTitle() + " | AVG = " +df.format(Papers.get(k).getAvg())+ " | REF = " +Papers.get(k).getREF() + " | Quartile = " +Papers.get(k).getQuartile());
+//		 }
+//		 System.out.println("GPA of "+Papers.size()+" Papers : "+GPA(Papers));
+//		 System.out.println("");
+		 
+		 
+		 PapSort(Papers,Papers.size());
+		 System.out.println("GPA of "+Papers.size()+" Papers : "+GPA(Papers, Papers.size()));
 		 System.out.println("");
+		 
 		 
 		 for (int auth_int = 0; auth_int < auth.length; auth_int++ )
 		 {
@@ -113,30 +155,91 @@ public class Main {
 			 for(Paper pap_ : Papers){
 			        if(pap_.getAuthors() != null && pap_.getAuthors().contains(auth[auth_int])){
 			        	
-			        	System.out.println("\nPaper ID = "+pap_.getID()+" | REF = "+pap_.getREF());
+			        	//System.out.println("\nPaper ID = "+pap_.getID()+" | REF = "+pap_.getREF()+ " | AVG = "+pap_.getAvg());
 			        	
 			        	auth_pap.add(pap_);
+
+			        	
+			        	
 			        }
-			  
+			        
+			       
+			           
+			    }
 			 Author auth_obj = new Author(auth[auth_int], auth_pap);
 	        	
-	        	 auth_al.add(auth_obj);
-			 System.out.println("\nSIZE "+auth_al.get(auth_int).auth_papers.size());
-		
-			 System.out.println("GPA = "+GPA(auth_al.get(auth_int).auth_papers)+"\n");
- 
+	        auth_al.add(auth_obj);
+//			System.out.println("\nSIZE "+auth_al.get(auth_int).auth_papers.size());
+//			
+//			
+//			System.out.println("GPA = "+GPA(auth_al.get(auth_int).auth_papers,auth_al.get(auth_int).auth_papers.size())+"\n");
+	        int xN = 5;
+	        PapSort(auth_al.get(auth_int).auth_papers,xN);
+	        System.out.println("GPA = "+GPA(auth_al.get(auth_int).auth_papers,xN));
+			 
 		 }
+		 
 	}
 	
-	public static double GPA(ArrayList<Paper> Papers_)
+	public static int PapSort(ArrayList<Paper> PapsToSort, int N){
+		
+		if (N <= PapsToSort.size()) {
+		 for (int k = 0 ; k < N; k++)
+		 {
+			 if (k+1 < N) {
+				 
+			 
+				 if (PapsToSort.get(k).getAvg() == PapsToSort.get(k+1).getAvg()) {
+					 
+					 
+					 if (PapsToSort.get(k).getQuartile() > PapsToSort.get(k+1).getQuartile())
+					 {
+						Collections.swap(PapsToSort, k, k+1);
+					 }
+					 
+				 
+				 }
+			 }
+			 
+			 DecimalFormat df = new DecimalFormat();
+			 df.setMaximumFractionDigits(2);
+			 System.out.println("Title = " + PapsToSort.get(k).getTitle() + " | AVG = " +df.format(PapsToSort.get(k).getAvg())+ " | REF = " +PapsToSort.get(k).getREF() + " | Quartile = " +PapsToSort.get(k).getQuartile());
+		 }
+		}
+		if (N > PapsToSort.size())
+		{
+			PapSort(PapsToSort,PapsToSort.size());
+			N = PapsToSort.size();
+		}
+		return N;
+		  
+	 }
+	
+	
+	
+	public static double GPA(ArrayList<Paper> Papers_, int N)
 	{
 		double gpa = 0;
 		double sum = 0;
-		for(int j = 0; j < Papers_.size(); j++)
-		{
-			sum += Papers_.get(j).getREF();
+		if (N <= Papers_.size()) {
+		
+			for(int j = 0; j < N; j++)
+			{
+				sum += Papers_.get(j).getREF();
+			}
+			gpa = sum/N;
 		}
-		gpa = sum/Papers_.size();
+		if (N > Papers_.size()) {
+			
+			
+			for(int j = 0; j < Papers_.size(); j++)
+			{
+				sum += Papers_.get(j).getREF();
+			}
+			//System.out.println();
+			gpa = sum/Papers_.size();
+		}
+		
 		return gpa;
 		
 	}
