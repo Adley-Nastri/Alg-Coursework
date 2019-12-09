@@ -63,7 +63,7 @@ public class Main {
 			
 			if (p_auth.size() == 0 && coauth.size() > 0) { //If the size of the Paper's author arraylist is 0 and the paper only has co-authors then
 			    //They must have left the institution 
-				System.out.println(coauth + " Left Instiution"); 
+				System.out.println(coauth + " Left Institution"); 
 				
 				//DO NOT CONTRIBUTE TO FTE HEAD COUNT
 			}
@@ -95,50 +95,6 @@ public class Main {
 		 //ADD THE REST TO BE USED WITHIN GPA CALCULATIONS
 		 
 		 System.out.println("TOTAL PAPERS : "+Papers.size()+ "\n");
-//		 for (int i = 0; i  < Papers.size(); i++) {
-//			 System.out.println("Paper ID : "+Papers.get(i).getID());
-//			 System.out.println("Paper Title : "+Papers.get(i).getTitle());
-//			 System.out.println("Quartile : "+Papers.get(i).getQuartile());
-//			 System.out.println("Authors :" + Papers.get(i).getAuthors());
-//			 System.out.println("Co-authors :" + Papers.get(i).getCoauthors());
-//			 System.out.println("Scores : "+Arrays.toString(Papers.get(i).getScores()));
-//			 System.out.printf("Avg : %.2f ",Papers.get(i).getAvg());
-//			 System.out.println("");
-//			 System.out.println("REF : "+Papers.get(i).getREF());
-//			 System.out.println("");
-//			 System.out.println("");
-//		 }
-		 
-		 
-		 Collections.sort(Papers);
-		 //MAKE SORT FUNCTION :  SORT(ArrayList<Paper> PapsToSort, int N)
-		 
-		  
-		 
-//		 for (int k = 0 ; k < Papers.size(); k++)
-//		 {
-//			 if (k+1 < Papers.size()) {
-//				 
-//			 
-//				 if (Papers.get(k).getAvg() == Papers.get(k+1).getAvg()) {
-//					 
-//					 //System.out.println("MATCH " +Papers.get(k).getTitle() + " "+ Papers.get(k+1).getTitle());
-//					 
-//					 if (Papers.get(k).getQuartile() > Papers.get(k+1).getQuartile())
-//					 {
-//						Collections.swap(Papers, k, k+1);
-//					 }
-//					 
-//				 
-//				 }
-//			 }
-//			 
-//			 DecimalFormat df = new DecimalFormat();
-//			 df.setMaximumFractionDigits(2);
-//			 System.out.println("Title = " + Papers.get(k).getTitle() + " | AVG = " +df.format(Papers.get(k).getAvg())+ " | REF = " +Papers.get(k).getREF() + " | Quartile = " +Papers.get(k).getQuartile());
-//		 }
-//		 System.out.println("GPA of "+Papers.size()+" Papers : "+GPA(Papers));
-//		 System.out.println("");
 		 
 		 
 		 PapSort(Papers,Papers.size());
@@ -175,14 +131,23 @@ public class Main {
 //			System.out.println("GPA = "+GPA(auth_al.get(auth_int).auth_papers,auth_al.get(auth_int).auth_papers.size())+"\n");
 	        int xN = 5;
 	        PapSort(auth_al.get(auth_int).auth_papers,xN);
-	        System.out.println("GPA = "+GPA(auth_al.get(auth_int).auth_papers,xN));
+	        //System.out.println("GPA = "+GPA(auth_al.get(auth_int).auth_papers,xN));
 			 
 		 }
 		 
-	}
-	
-	public static int PapSort(ArrayList<Paper> PapsToSort, int N){
+		 int M = auth_al.size();
+		 int N = (int) Math.ceil(M * 2.5);
+		 System.out.println("\nN = "+N);
+		 
+		 int papsort_ = PapSort(Papers,N);
+		 Double gpa_ = GPA(Papers,papsort_);
+		 System.out.println("\nGPA of top "+N+" papers = "+gpa_);
+		 
 		
+	}
+
+	public static int PapSort(ArrayList<Paper> PapsToSort, int N){
+		Collections.sort(PapsToSort);
 		if (N <= PapsToSort.size()) {
 		 for (int k = 0 ; k < N; k++)
 		 {
