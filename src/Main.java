@@ -18,12 +18,12 @@ public class Main {
 		}
 
 	public static void main(String[] args) throws FileNotFoundException{
-		 input = new Scanner(new File("C:\\Users\\CANastri\\Desktop\\Github Alg\\Alg-Coursework\\src\\Input.txt"));
+		 input = new Scanner(new File("Input.txt"));
 		 input.useDelimiter(","); //Each new object is separated by a comma
 		 
 		 ArrayList<Paper> Papers = new ArrayList<Paper>(); //ArrayList of Paper Objects
 		 ArrayList<Author> auth_al = new ArrayList<Author>(); //ArrayList of authors
-		 String[] auth = input.nextLine().split(","); //Main authors defined in the first line of the file (AK, PF, AM), split by a comma
+		 String[] auth = input.nextLine().replace(" ", "").split(","); //Main authors defined in the first line of the file (AK, PF, AM), split by a comma
 		 
 		 System.out.println(Arrays.toString(auth));
 		 System.out.println("");
@@ -36,11 +36,11 @@ public class Main {
 			 String title = input.next();
 			 System.out.println(title);
 			 
-			 String quart = input.nextLine().replace(",", "");
+			 String quart = input.nextLine().replace(",", "").replace(" ", "");
 			 System.out.println(quart);
 			 int quartile = Integer.parseInt(quart);
 			 
-			 String[] coauth_tmp = input.nextLine().split(","); // Read next line and place into a temp array
+			 String[] coauth_tmp = input.nextLine().replace(" ", "").split(","); // Read next line and place into a temp array
 			 
 			for (int ca = 0; ca < coauth_tmp.length ; ca ++)
 			{ 
@@ -71,7 +71,7 @@ public class Main {
 			
 			
 			 
-			 String[] scores = input.nextLine().split(",");
+			 String[] scores = input.nextLine().replace(" ", "").split(",");
 			 System.out.println(Arrays.toString(scores));
 			 System.out.println("");
 			 
