@@ -22,7 +22,7 @@ public class Main {
 		 input.useDelimiter(","); //Each new object is separated by a comma
 		 
 		 ArrayList<Paper> Papers = new ArrayList<Paper>(); //ArrayList of Paper Objects
-		 ArrayList<Author> auth_al = new ArrayList<Author>();
+		 ArrayList<Author> auth_al = new ArrayList<Author>(); //ArrayList of authors
 		 String[] auth = input.nextLine().split(","); //Main authors defined in the first line of the file (AK, PF, AM), split by a comma
 		 
 		 System.out.println(Arrays.toString(auth));
@@ -31,7 +31,7 @@ public class Main {
 			 ArrayList<String> p_auth = new ArrayList<String>(); //Authors to be applied to paper object. 
 			 ArrayList<String> coauth = new ArrayList<String>(); //Co-authors to be applied
 			 
-			 String id = input.next(); //
+			 String id = input.next(); 
 			 System.out.println(id);
 			 String title = input.next();
 			 System.out.println(title);
@@ -60,7 +60,8 @@ public class Main {
 			System.out.println("Auth "+p_auth);
 			System.out.println("Co-auth "+coauth);
 			
-			
+			//This indentifies whether the Author is a member of the institution. CURRENTLY UN-USED! Don't worry about this for now
+			 
 			if (p_auth.size() == 0 && coauth.size() > 0) { //If the size of the Paper's author arraylist is 0 and the paper only has co-authors then
 			    //They must have left the institution 
 				System.out.println(coauth + " Left Institution"); 
@@ -81,7 +82,7 @@ public class Main {
 			Paper pap = new Paper(id, title, quartile, p_auth, coauth, scorearr); //New Paper object
 			
 			
-			Papers.add(pap);
+			Papers.add(pap); //Add each paper found to the Papers ArrayList
 		
 		 }
 		 //IF A PAPER DOESNT CONTAIN AT LEAST 1 AUTHOR FROM THE STATED AUTHOR LIST - LEFT INSTITUTION 
@@ -94,72 +95,83 @@ public class Main {
 		 //IF PAPER IS BY MAIN AUTHOR BUT EXCEEDS THE MAX VALUE OF 5 FOR THAT AUTHOR, THEN SCRAP THE PAPER
 		 //ADD THE REST TO BE USED WITHIN GPA CALCULATIONS
 		 
-		 System.out.println("TOTAL PAPERS : "+Papers.size()+ "\n");
+		
 		 
 		 
-		 PapSort(Papers,Papers.size());
-		 System.out.println("GPA of "+Papers.size()+" Papers : "+GPA(Papers, Papers.size()));
-		 System.out.println("");
+		 //This block is not required for the requirements, just a proof of concept.
+		 //System.out.println("TOTAL PAPERS : "+Papers.size()+ "\n");
+		 //PapSort(Papers,Papers.size()); 
+		 //System.out.println("GPA of "+Papers.size()+" Papers : "+GPA(Papers, Papers.size()));
+		 //System.out.println("");
+		
+		
 		 
 		 
-		 for (int auth_int = 0; auth_int < auth.length; auth_int++ )
+		 for (int auth_int = 0; auth_int < auth.length; auth_int++ ) //auth_int is used instead of the traditional 'i' varaible
+			 //for the size of the list of authors (first determined from the VERY FIRST LINE of the input file
 		 {
-			 ArrayList<Paper> auth_pap = new ArrayList<Paper>();
+			 ArrayList<Paper> auth_pap = new ArrayList<Paper>(); //Create a new ArrayList for each author
+			 //to contain the papers associated with each one
+
 			 System.out.println("~~~~~~~~~~~~~~~~~~~~");
-			 System.out.println(auth[auth_int]);
+			 System.out.println(auth[auth_int]); // Print out the author name using auth_int as the index of the auth array
 			 System.out.println("~~~~~~~~~~~~~~~~~~~~");
-			 for(Paper pap_ : Papers){
-			        if(pap_.getAuthors() != null && pap_.getAuthors().contains(auth[auth_int])){
+			 for(Paper pap_ : Papers){ //for every paper object in the Papers ArrayList
+			        if(pap_.getAuthors() != null && pap_.getAuthors().contains(auth[auth_int])){ //if current paper's authors are not equal to null
+					//and contains the current indexed author
 			        	
 			        	//System.out.println("\nPaper ID = "+pap_.getID()+" | REF = "+pap_.getREF()+ " | AVG = "+pap_.getAvg());
 			        	
-			        	auth_pap.add(pap_);
-
-			        	
-			        	
+			        	auth_pap.add(pap_); //add the paper to the auth_pap ArrayList	
 			        }
-			        
-			       
-			           
+		       
 			    }
-			 Author auth_obj = new Author(auth[auth_int], auth_pap);
+			 Author auth_obj = new Author(auth[auth_int], auth_pap); // Create a new Author object with the current indexed name and the papers 
+			 //assocaited witht the curent author
 	        	
-	        auth_al.add(auth_obj);
+	        auth_al.add(auth_obj); //Add the current Author object to the auth_al ArrayList as defined at the top of the program
+			 
 //			System.out.println("\nSIZE "+auth_al.get(auth_int).auth_papers.size());
 //			
 //			
 //			System.out.println("GPA = "+GPA(auth_al.get(auth_int).auth_papers,auth_al.get(auth_int).auth_papers.size())+"\n");
-	        int xN = 5;
-	        PapSort(auth_al.get(auth_int).auth_papers,xN);
-	        //System.out.println("GPA = "+GPA(auth_al.get(auth_int).auth_papers,xN));
+	        
+			 
+	        int xN = 5; //Contraint maximum of 5 papers per author
+	        PapSort(auth_al.get(auth_int).auth_papers,xN); //Run PapSort function with the auth_al index of auth_int (current position in for loop), then how many
+			 //papers to process. Results in showing the top 5 papers for the current author
+			 
 			 
 		 }
 		 
 		 int M = auth_al.size();
-		 int N = (int) Math.ceil(M * 2.5);
-		 System.out.println("\nN = "+N);
+		 int N = (int) Math.ceil(M * 2.5); // 2.5 Times the amount of authors,  converted to an int, then rounded UP
+		 System.out.println("\nN = "+N);//Print new line (\n) then print the value of N
 		 
-		 int papsort_ = PapSort(Papers,N);
-		 Double gpa_ = GPA(Papers,papsort_);
+		 int papsort_ = PapSort(Papers,N); //As shown below, PapSort returns an int value, so the result of the function can be stored as a variable
+		 Double gpa_ = GPA(Papers,papsort_); //Same with the GPA, but returns a Double. Feed the value of papsort_ into the GPA function
 		 System.out.println("\nGPA of top "+N+" papers = "+gpa_);
 		 
 		
 	}
 
 	public static int PapSort(ArrayList<Paper> PapsToSort, int N){
-		Collections.sort(PapsToSort);
-		if (N <= PapsToSort.size()) {
-		 for (int k = 0 ; k < N; k++)
+		Collections.sort(PapsToSort); //Sort the Papers parsed in
+		if (N <= PapsToSort.size()) { //As long as N is less than or equal to the size of the arraylist. Used to prevent exceptions
+		 for (int k = 0 ; k < N; k++) //k is used instead of 'i'
 		 {
-			 if (k+1 < N) {
+			 if (k+1 < N) { //If the next position in the ArrayList is less than N
 				 
 			 
-				 if (PapsToSort.get(k).getAvg() == PapsToSort.get(k+1).getAvg()) {
-					 
-					 
+				 if (PapsToSort.get(k).getAvg() == PapsToSort.get(k+1).getAvg()) { //If the current paper's average is equal to the next paper's average
+					 //then look at both quartiles  
 					 if (PapsToSort.get(k).getQuartile() > PapsToSort.get(k+1).getQuartile())
+						 //if the current paper's quartile is mathematically larger than the next paper's quartile
+						 //then swap their positions in the ArrayList
+						 //As we are showing papers whereby the lower the quartile number, the worse the paper, thus the paper is shown
+						 //lower down
 					 {
-						Collections.swap(PapsToSort, k, k+1);
+						Collections.swap(PapsToSort, k, k+1); //Put the next position's paper in the place of the current paper
 					 }
 					 
 				 
@@ -167,16 +179,16 @@ public class Main {
 			 }
 			 
 			 DecimalFormat df = new DecimalFormat();
-			 df.setMaximumFractionDigits(2);
+			 df.setMaximumFractionDigits(2); //Used for decimal places
 			 System.out.println("Title = " + PapsToSort.get(k).getTitle() + " | AVG = " +df.format(PapsToSort.get(k).getAvg())+ " | REF = " +PapsToSort.get(k).getREF() + " | Quartile = " +PapsToSort.get(k).getQuartile());
 		 }
 		}
-		if (N > PapsToSort.size())
+		if (N > PapsToSort.size()) //Exception avoidance
 		{
-			PapSort(PapsToSort,PapsToSort.size());
+			PapSort(PapsToSort,PapsToSort.size()); //Recursion of the function
 			N = PapsToSort.size();
 		}
-		return N;
+		return N; //N value returned as an int
 		  
 	 }
 	
@@ -186,26 +198,24 @@ public class Main {
 	{
 		double gpa = 0;
 		double sum = 0;
-		if (N <= Papers_.size()) {
+		if (N <= Papers_.size()) { //As long as N is smaller or equal than the size of the ArrayList of Papers
 		
 			for(int j = 0; j < N; j++)
 			{
-				sum += Papers_.get(j).getREF();
+				sum += Papers_.get(j).getREF(); //Add up the REF score of each paper 
 			}
-			gpa = sum/N;
+			gpa = sum/N; //Mean Average. This is we can choose an N amount of top papers 
 		}
-		if (N > Papers_.size()) {
+		if (N > Papers_.size()) { //If N is larger than the size of the ArrayList
 			
-			
-			for(int j = 0; j < Papers_.size(); j++)
+			for(int j = 0; j < Papers_.size(); j++) 
 			{
 				sum += Papers_.get(j).getREF();
 			}
-			//System.out.println();
-			gpa = sum/Papers_.size();
+			gpa = sum/Papers_.size(); //Divide by the size of the ArrayList
 		}
 		
-		return gpa;
+		return gpa;//Return Double
 		
 	}
 	
