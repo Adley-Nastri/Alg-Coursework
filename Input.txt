@@ -2,7 +2,7 @@ AK, PF, AM, MM, RB, MG, SS
 P1, Title1, 1
 AM, AP
 9, 8, 7
-P2, Title2, 3
+P2, Title2, 2
 AM, PS, TC
 10, 8
 P3, Title3, 3
